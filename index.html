@@ -209,6 +209,16 @@
             margin-bottom: 20px;
         }
 
+        .modal-content select {
+            padding: 10px;
+            font-size: 1em;
+            width: 80%;
+            margin: 10px 0;
+            border: 2px solid #c51162;
+            border-radius: 10px;
+            outline: none;
+        }
+
         .modal-content input {
             padding: 10px;
             font-size: 1em;
@@ -352,6 +362,7 @@
                 font-size: 1.6em;
             }
 
+            .modal-content select,
             .modal-content input {
                 width: 90%;
             }
@@ -409,11 +420,16 @@
     <div class="modal">
         <div class="modal-content">
             <h2>Uma Surpresa para Aline</h2>
+            <p>Escolha uma carta para ler:</p>
+            <select id="letterSelect">
+                <option value="1">Primeira Carta</option>
+                <option value="2">Segunda Carta</option>
+            </select>
             <p>Digite a senha que veio com as flores:</p>
             <input type="password" placeholder="Digite a senha">
             <div class="error-message"></div>
-            <div class="letter">
-                <h3>Meu coração, Aline</h3>
+            <div class="letter" id="letter1">
+                <h3>Minha Vida ♥</h3>
                 <p>
                     Como é bom compartilhar esses momentos com você, mesmo que ainda estejamos no começo dessa jornada.
                     Cada conversa nossa é como uma faísca que ilumina meu dia, cheia de risadas, ideias e uma conexão
@@ -435,6 +451,31 @@
                 </p>
                 <p>
                     Com carinho,<br>
+                    Elton Esteves
+                </p>
+            </div>
+            <div class="letter" id="letter2">
+                <h3>Meu Amor ♥ </h3>
+                <p>
+                    Depois do nosso último encontro, sinto meu coração ainda mais cheio de você. Aquele dia foi como um
+                    presente que guardo com carinho na memória – seus olhares, seu sorriso, a forma como o tempo pareceu
+                    voar enquanto estávamos juntos. Cada momento ao seu lado me faz perceber o quanto você é especial,
+                    como sua presença ilumina tudo ao meu redor.
+                </p>
+                <p>
+                    Você tem esse jeito único de transformar instantes simples em memórias inesquecíveis. A maneira como
+                    rimos juntos, como compartilhamos sonhos e silêncios confortáveis, me faz acreditar que estamos
+                    construindo algo verdadeiro. Quero continuar descobrindo o mundo ao seu lado, explorando cada
+                    pedacinho
+                    do que nos conecta, e te fazendo sentir o quanto você é amada e valorizada.
+                </p>
+                <p>
+                    Essa carta é um reflexo do que sinto agora: uma gratidão imensa por você estar na minha vida e uma
+                    vontade enorme de te fazer feliz em cada novo dia. Que possamos viver muitos outros momentos assim,
+                    cheios de carinho, risadas e cumplicidade.
+                </p>
+                <p>
+                    Com todo meu amor,<br>
                     Elton Esteves
                 </p>
             </div>
@@ -460,12 +501,18 @@
 
         // Messages
         const messages = [
-            "Adoro como você torna qualquer conversa mais leve e divertida!",
-            "Conhecer você tem sido uma surpresa incrível, e mal posso esperar para saber mais.",
-            "Seu jeito único sempre me faz sorrir, mesmo de longe.",
-            "Gosto de como você me faz querer ser uma versão melhor de mim mesmo.",
-            "Cada papo com você é um momento especial que fico ansioso para repetir."
+            "Te sentir foi mais do que desejo... foi conexão. E só de lembrar, meu corpo inteiro responde.",
+            "Desde aquela noite, não consigo parar de pensar em como seu toque me acende por dentro.",
+            "Você tem um jeito de me provocar com um olhar… e eu amo cada segundo disso.",
+            "Me perco nas lembranças do seu corpo junto ao meu… e só penso em reviver tudo isso.",
+            "Não é só físico… é como você bagunça minha mente e meu coração ao mesmo tempo.",
+            "Cada momento com você foi intenso… e confesso: quero muito mais.",
+            "Tem algo no seu beijo que me vicia e me faz querer parar o tempo ali.",
+            "Entre carinho e desejo, você virou meu ponto fraco mais delicioso.",
+            "Te imaginar de novo nos meus braços me tira o fôlego… e me deixa com sede de você.",
+            "O que vivemos foi fogo, mas com alma… e eu não quero que isso se apague nunca."
         ];
+
 
         let currentMessage = 0;
         let charIndex = 0;
@@ -514,7 +561,8 @@
             const modal = document.querySelector('.modal');
             modal.style.display = 'flex';
             document.querySelector('.modal-content input').value = '';
-            document.querySelector('.modal-content .letter').style.display = 'none';
+            document.querySelector('#letter1').style.display = 'none';
+            document.querySelector('#letter2').style.display = 'none';
             document.querySelector('.modal-content .error-message').style.display = 'none';
             document.querySelector('.modal-content input').focus();
         }
@@ -522,12 +570,14 @@
         function checkPassword() {
             const passwordInput = document.querySelector('.modal-content input').value;
             const correctPassword = '123456';
-            const letter = document.querySelector('.modal-content .letter');
+            const letterSelect = document.querySelector('#letterSelect').value;
+            const letter = document.querySelector(`#letter${letterSelect}`);
             const errorMessage = document.querySelector('.modal-content .error-message');
 
             if (passwordInput === correctPassword) {
                 letter.style.display = 'block';
                 errorMessage.style.display = 'none';
+                document.querySelector('.modal-content select').style.display = 'none';
                 document.querySelector('.modal-content input').style.display = 'none';
                 document.querySelector('.modal-content button[onclick="checkPassword()"]').style.display = 'none';
             } else {
