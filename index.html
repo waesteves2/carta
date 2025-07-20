@@ -429,7 +429,7 @@
             <input type="password" placeholder="Digite a senha">
             <div class="error-message"></div>
             <div class="letter" id="letter1">
-                <h3>Minha Vida ♥</h3>
+                <h3>Meu coração, Aline</h3>
                 <p>
                     Como é bom compartilhar esses momentos com você, mesmo que ainda estejamos no começo dessa jornada.
                     Cada conversa nossa é como uma faísca que ilumina meu dia, cheia de risadas, ideias e uma conexão
@@ -455,7 +455,7 @@
                 </p>
             </div>
             <div class="letter" id="letter2">
-                <h3>Meu Amor ♥ </h3>
+                <h3>Minha querida Aline</h3>
                 <p>
                     Depois do nosso último encontro, sinto meu coração ainda mais cheio de você. Aquele dia foi como um
                     presente que guardo com carinho na memória – seus olhares, seu sorriso, a forma como o tempo pareceu
@@ -465,8 +465,7 @@
                 <p>
                     Você tem esse jeito único de transformar instantes simples em memórias inesquecíveis. A maneira como
                     rimos juntos, como compartilhamos sonhos e silêncios confortáveis, me faz acreditar que estamos
-                    construindo algo verdadeiro. Quero continuar descobrindo o mundo ao seu lado, explorando cada
-                    pedacinho
+                    construindo algo verdadeiro. Quero continuar descobrindo o mundo ao seu lado, explorando cada pedacinho
                     do que nos conecta, e te fazendo sentir o quanto você é amada e valorizada.
                 </p>
                 <p>
@@ -484,6 +483,11 @@
         </div>
     </div>
     <div class="confetti"></div>
+   <audio id="backgroundMusic" autoplay loop>
+    <source src="music.mp3" type="audio/mpeg">
+    Seu navegador não suporta o elemento de áudio.
+</audio>
+
 
     <script>
         // Starry background
@@ -500,7 +504,7 @@
         }
 
         // Messages
-        const messages = [
+       const messages = [
             "Te sentir foi mais do que desejo... foi conexão. E só de lembrar, meu corpo inteiro responde.",
             "Desde aquela noite, não consigo parar de pensar em como seu toque me acende por dentro.",
             "Você tem um jeito de me provocar com um olhar… e eu amo cada segundo disso.",
@@ -512,7 +516,6 @@
             "Te imaginar de novo nos meus braços me tira o fôlego… e me deixa com sede de você.",
             "O que vivemos foi fogo, mas com alma… e eu não quero que isso se apague nunca."
         ];
-
 
         let currentMessage = 0;
         let charIndex = 0;
@@ -573,6 +576,7 @@
             const letterSelect = document.querySelector('#letterSelect').value;
             const letter = document.querySelector(`#letter${letterSelect}`);
             const errorMessage = document.querySelector('.modal-content .error-message');
+            const backgroundMusic = document.getElementById('backgroundMusic');
 
             if (passwordInput === correctPassword) {
                 letter.style.display = 'block';
@@ -580,6 +584,11 @@
                 document.querySelector('.modal-content select').style.display = 'none';
                 document.querySelector('.modal-content input').style.display = 'none';
                 document.querySelector('.modal-content button[onclick="checkPassword()"]').style.display = 'none';
+                backgroundMusic.play().catch(function(error) {
+                    console.error("Erro ao reproduzir o áudio: ", error);
+                    errorMessage.textContent = 'Não foi possível reproduzir a música. Verifique o console para detalhes.';
+                    errorMessage.style.display = 'block';
+                });
             } else {
                 errorMessage.textContent = 'Senha incorreta. Tente novamente!';
                 errorMessage.style.display = 'block';
@@ -587,6 +596,9 @@
         }
 
         function closeModal() {
+            const backgroundMusic = document.getElementById('backgroundMusic');
+            backgroundMusic.pause();
+            backgroundMusic.currentTime = 0;
             document.querySelector('.modal').style.display = 'none';
         }
 
